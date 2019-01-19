@@ -1,0 +1,181 @@
+﻿@page
+@model RelationalDb.Pages.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container">
+    <h1 class="display-1">RelationalDb</h1>
+    <h2 class="text-muted">with REST API</h2>
+    <br />
+
+    @* Zrób tak żeby wyświetlało sie tylko na dużym ekranie *@
+    <div class="row mb-5 align-items-center d-none d-lg-flex">
+        <div class="col-3">
+            <div class="card border-success">
+                <div class="h4 card-header">Customers</div>
+                <div class="card-body text-success">
+                    <p class="card-text">
+                        <strong>+CustomerID: int</strong> &#x1F511 <br />
+                        +FirstName: string<br />
+                        +LastName: string
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <p class="card-text">
+                        &#x1F517 <br />
+                        Orders: ICollection&lt;Order&gt;
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-1 px-0 text-center">
+            -1-------*-
+        </div>
+
+        <div class="col-3">
+            <div class="card border-success">
+                <div class="h4 card-header">Orders</div>
+                <div class="card-body text-success">
+                    <p class="card-text">
+                        <strong>+OrderID: int</strong> &#x1F511 <br />
+                        +Date: DateTime<br />
+                        +CustomerID: int &#x1F511 [FK]<br />
+                        +ProductID: int &#x1F511 [FK]<br />
+                </div>
+                <div class="card-footer">
+                    <p class="card-text">
+                        &#x1F517 <br />
+                        Customers: Customers<br />
+                        Products: Products
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-1 px-0 text-center">
+            -*-------1-
+        </div>
+
+        <div class="col-3">
+            <div class="card border-success">
+                <div class="h4 card-header">Products</div>
+                <div class="card-body text-success">
+                    <p class="card-text">
+                        <strong>+ProductID: int</strong> &#x1F511 <br />
+                        +Name: string<br />
+                        +Desctription: string<br />
+                        +Price: float<br />
+                        +Quantity: int
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <p class="card-text">
+                        &#x1F517 <br />
+                        Orders: ICollection&lt;Order&gt;
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-1 px-0 text-center">
+            @*empty div for gird - 11+1=12 *@
+        </div>
+    </div>
+
+
+    <div class="row mb-5 align-items-center d-lg-none">
+        <div class="col">
+            <div class="alert alert-warning">
+                <h2 class="font-italic">%$#@@!</h2>
+                <p>Rozszerz okno, aby zobaczyć diagram.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mb-3">
+        <div class="col-lg">
+            <h1>+ customers</h1>
+            <div>
+                <h4>GET <a href="/api/customers">api/customers</a></h4>
+                <p>Zwraca wszystkie elementy.</p>
+            </div>
+
+            <div>
+                <h4>GET <a href="/api/customers/2">api/customers/2</a></h4>
+                <p>Zwraca element o ID równym 2.</p>
+            </div>
+        </div>
+        <div class="col-lg">
+            <h1>+ orders</h1>
+            <div>
+                <h4>GET <a href="/api/orders">api/orders</a></h4>
+                <p>Zwraca wszystkie elementy.</p>
+            </div>
+
+            <div>
+                <h4>GET <a href="/api/orders/2">api/orders/2</a></h4>
+                <p>Zwraca element o ID równym 2.</p>
+            </div>
+
+        </div>
+        <div class="col-lg">
+            <h1>+ products</h1>
+            <div>
+                <h4>GET <a href="/api/products">api/products</a></h4>
+                <p>Zwraca wszystkie elementy.</p>
+            </div>
+
+            <div>
+                <h4>GET <a href="/api/products/2">api/products/2</a></h4>
+                <p>Zwraca element o ID równym 2.</p>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <h4 class="text-muted">For testing</h4>
+    <a href="/database/addorder">Add random order</a>
+
+    @*
+        <br />
+        <p>
+        <mark>Dla <strong>POST</strong>, <strong>PUT</strong> i <strong>DELETE</strong> wymagany jest token autoryzacyjny.<br />
+         W nagłówku żądania należy zawrzeć dodatkowo "Klucz:Wartość".<br />
+         "<span style="color:red;">Authorization:Basic 1234567890abcDEF</span>"</mark>
+        </p>
+
+
+
+        <div>
+            <h4>POST api/movies</h4>
+            <p>Dodaje element. Przykładowe body:</p>
+            <pre>
+                {
+                "title": "Black Mirror: Bandersnatch",
+                "year": 2018
+                }
+            </pre>
+        </div>
+
+        <div>
+            <h4>PUT api/movies/5</h4>
+            <p>Edytuje element o ID równym 5. Przykładowe body:</p>
+            <pre>
+                {
+                "title": "Genesis 2.0",
+                "year": 2018
+                }
+            </pre>
+        </div>
+
+        <div>
+            <h4>DELETE api/movies/5</h4>
+            <p>Usuwa element o ID równym 5.</p>
+        </div>*@
+
+</div>
