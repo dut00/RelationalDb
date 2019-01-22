@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RelationalDb.Data;
+using RelationalDb.DTOs;
+using RelationalDb.Helpers;
+using RelationalDb.Middleware;
 using RelationalDb.Models;
 using RelationalDb.Services;
 
@@ -10,66 +15,51 @@ namespace RelationalDb.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class CustomersController : ControllerBase, IController<Customer, CustomerDTO>
     {
-        private ITData<Customer> _customerData;
+        private IData<Customer, CustomerDTO> _customerData;
 
-        public CustomersController(ITData<Customer> customerData)
+        public CustomersController(IData<Customer, CustomerDTO> customerData)
         {
             _customerData = customerData;
         }
 
-
         // GET api/customers
         [HttpGet]
-        public IEnumerable<Customer> Get()
-        //public ActionResult<IEnumerable<Customer>> Get()
+        public IQueryable<Customer> GetAll([FromQuery] QueryParameters queryParameters) // ActionResult<IEnumerable<Customer>>
         {
-            return _customerData.GetAll();
+            return _customerData.GetAll(queryParameters);
         }
 
         // GET api/customers/5
         [HttpGet("{id}")]
-        public Customer Get(int id)
+        public Customer Get([FromQuery] QueryParameters queryParameters, int id)
         {
-            return _customerData.Get(id);
+            return _customerData.Get(queryParameters, id);
         }
-
-        #region  Sprawdziłem. Działa. Przesyła JSONa z zagnieżdżonym obiektem.
-        //public class Faktura
-        //{
-        //    public int IdFAktury { get; set; }
-        //    public string NrFaktury { get; set; }
-        //    public Customer customer { get; set; }
-        //}
-
-        //[HttpGet("{id}")]
-        //public Faktura Get(int id)
-        //{
-        //    var fak = new Faktura();
-        //    fak.IdFAktury = 111;
-        //    fak.NrFaktury = "R12/4567/00012";
-        //    fak.customer = _customerData.Get(id);
-        //    return fak;
-        //}
-        #endregion
 
         // POST api/customers
         [HttpPost]
-        public void Post([FromBody] string value)
+        [AuthorizationTokenFilter]
+        public void Post([FromBody] CustomerDTO customerDTO)
         {
+            _customerData.Add(customerDTO);
         }
 
         // PUT api/customers/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [AuthorizationTokenFilter]
+        public void Put(int id, [FromBody] CustomerDTO customerDTO)
         {
+            _customerData.Update(id, customerDTO);
         }
 
         // DELETE api/customers/5
         [HttpDelete("{id}")]
+        [AuthorizationTokenFilter]
         public void Delete(int id)
         {
+            _customerData.Delete(id);
         }
     }
 }
