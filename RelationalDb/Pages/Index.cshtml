@@ -5,16 +5,20 @@
 }
 
 
-<div class="container">
-    <h1 class="display-1">RelationalDb</h1>
-    <h2 class="text-muted">with REST API</h2>
+<div class="container mb-4">
+    <h1 class="display-4 d-sm-none">RelationalDb</h1>
+    <p class="h1 display-3 d-none d-sm-inline d-md-none">RelationalDb</p>
+    <p class="h1 display-2 d-none d-md-inline">RelationalDb</p>
+    <h3 class="text-muted">with REST API</h3>
     <br />
 
     @* Zrób tak żeby wyświetlało sie tylko na dużym ekranie *@
-    <div class="row mb-5 align-items-center d-none d-lg-flex">
+    <div class="row align-items-center d-none d-lg-flex">
         <div class="col-3">
             <div class="card border-success">
-                <div class="h4 card-header">Customers</div>
+                <div class="h4 card-header">
+                    Customer
+                </div>
                 <div class="card-body text-success">
                     <p class="card-text">
                         <strong>+CustomerID: int</strong> &#x1F511 <br />
@@ -32,36 +36,40 @@
         </div>
 
         <div class="col-1 px-0 text-center">
-            -1-------*-
+            -<b>1</b>-------<b>*</b>-
         </div>
 
         <div class="col-3">
             <div class="card border-success">
-                <div class="h4 card-header">Orders</div>
+                <div class="h4 card-header">
+                    Order
+                </div>
                 <div class="card-body text-success">
                     <p class="card-text">
                         <strong>+OrderID: int</strong> &#x1F511 <br />
                         +Date: DateTime<br />
-                        +CustomerID: int &#x1F511 [FK]<br />
-                        +ProductID: int &#x1F511 [FK]<br />
-                </div>
+                        +CustomerID: int <span class="badge badge-warning" data-toggle="tooltip" data-placement="top" title="Foreign key">FK</span><br />
+                        +ProductID: int <span class="badge badge-warning" data-toggle="tooltip" data-placement="top" title="Foreign key">FK</span><br />
+</div>
                 <div class="card-footer">
                     <p class="card-text">
                         &#x1F517 <br />
-                        Customers: Customers<br />
-                        Products: Products
+                        Customer: Customer<br />
+                        Product: Product
                     </p>
                 </div>
             </div>
         </div>
 
         <div class="col-1 px-0 text-center">
-            -*-------1-
+            -<b>*</b>-------<b>1</b>-
         </div>
 
         <div class="col-3">
             <div class="card border-success">
-                <div class="h4 card-header">Products</div>
+                <div class="h4 card-header">
+                    Product
+                </div>
                 <div class="card-body text-success">
                     <p class="card-text">
                         <strong>+ProductID: int</strong> &#x1F511 <br />
@@ -84,98 +92,266 @@
             @*empty div for gird - 11+1=12 *@
         </div>
     </div>
-
-
-    <div class="row mb-5 align-items-center d-lg-none">
+    <div class="row align-items-center d-lg-none">
         <div class="col">
             <div class="alert alert-warning">
                 <h2 class="font-italic">%$#@@!</h2>
-                <p>Rozszerz okno, aby zobaczyć diagram.</p>
+                <p class="text-center">
+                    <span class="badge badge-warning py-3">
+                        Customer
+                    </span>
+                    -<b>1</b>---<b>*</b>-
+                    <span class="badge badge-warning py-3">
+                        Order
+                    </span>
+                    -<b>*</b>---<b>1</b>-
+                    <span class="badge badge-warning py-3">
+                        Product
+                    </span>
+                </p>
+                <p>Rozszerz okno, aby zobaczyć diagram &#x1F605</p>
             </div>
         </div>
     </div>
+</div>
 
-
-    <div class="row mb-3">
+<div class="container mb-4">
+    <div class="row">
         <div class="col-lg">
             <h1>+ customers</h1>
             <div>
                 <h4>GET <a href="/api/customers">api/customers</a></h4>
-                <p>Zwraca wszystkie elementy.</p>
+                <p>
+                    Returns a list of all customers.<br />
+                    @*<small><a href="/api/customers/?sortby=customerId&orderby=asc&details=false">/?sortby=customerId&orderby=asc&details=false</a> (default)</small><br />*@
+                    <a href="/api/customers/?sortby=firstName">/?sortby=firstName</a><br />
+                    <a href="/api/customers/?sortby=lastName">/?sortby=lastName</a><br />
+                    <a href="/api/customers/?orderby=desc">/?orderby=desc</a><br />
+                    <a href="/api/customers/?details=true">/?details=true</a>
+                </p>
             </div>
-
             <div>
                 <h4>GET <a href="/api/customers/2">api/customers/2</a></h4>
-                <p>Zwraca element o ID równym 2.</p>
+                <p>
+                    Returns the customer with ID 2.<br />
+                    <a href="/api/customers/2/?details=true">/?details=true</a>
+                </p>
+            </div>
+            <div class="mb-3">
+                <h4>
+                    <span data-toggle="tooltip" data-placement="top" title="This method requires authentication tooken">&#x1F510;</span>
+                    POST <span class="text-muted">api/customers</span>
+                </h4>
+                <p class="mb-1">
+                    Adds a new customer.<br />
+                    <sub class="mx-3">Request body example:</sub>
+                </p>
+                <div class="mx-3 p-2 bg-light rounded">
+                    <code>
+                        {<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"firstname": "James",<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"lastname": "Bond"<br />
+                        }
+                    </code>
+                </div>
+            </div>
+            <div class="mb-3">
+                <h4>
+                    <span data-toggle="tooltip" data-placement="top" title="This method requires authentication token">&#x1F510;</span>
+                    PUT <span class="text-muted">api/customers/2</span>
+                </h4>
+                <p class="mb-1">
+                    Update the customer with ID 2.<br />
+
+                </p><sub class="mx-3">Request body example:</sub>
+                <div class="mx-3 p-2 bg-light rounded">
+                    <code>
+                        {<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"firstname": "Peter",<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"lastname": "Pan"<br />
+                        }
+                    </code>
+                </div>
+            </div>
+            <div>
+                <h4>
+                    <span data-toggle="tooltip" data-placement="top" title="This method requires authentication token">&#x1F510;</span>
+                    DELETE <span class="text-muted">api/customers/2</span>
+                </h4>
+                <p>
+                    Remove the customer with ID 2.<br />
+                </p>
             </div>
         </div>
+
+
         <div class="col-lg">
             <h1>+ orders</h1>
             <div>
                 <h4>GET <a href="/api/orders">api/orders</a></h4>
-                <p>Zwraca wszystkie elementy.</p>
+                <p>
+                    Returns a list of all orders.<br />
+                    <a href="/api/orders/?sortby=date">/?sortby=date</a><br />
+                    <a href="/api/orders/?sortby=customerId">/?sortby=customerId</a><br />
+                    <a href="/api/orders/?sortby=productId">/?sortby=productId</a><br />
+                    <a href="/api/orders/?orderby=desc">/?orderby=desc</a><br />
+                    @*<a href="/api/orders/?details=true">/?details=true</a>*@
+                </p>
             </div>
-
             <div>
                 <h4>GET <a href="/api/orders/2">api/orders/2</a></h4>
-                <p>Zwraca element o ID równym 2.</p>
+                <p>
+                    Returns the order with ID 2.<br />
+                    @*<a href="/api/orders/?details=true">/?details=true</a>*@
+                </p>
             </div>
-
+            <div class="mb-3">
+                <h4>
+                    <span data-toggle="tooltip" data-placement="top" title="This method requires authentication token">&#x1F510;</span>
+                    POST <span class="text-muted">api/orders</span>
+                </h4>
+                <p class="mb-1">
+                    Adds a new order.<br />
+                    <sub class="mx-3">Request body example:</sub>
+                </p>
+                <div class="mx-3 p-2 bg-light rounded">
+                    <code>
+                        {<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"date": "2019-01-18T11:24:00",<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"customerId": 2,<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"productID": 5<br />
+                        }
+                    </code>
+                </div>
+            </div>
+            <div class="mb-3">
+                <h4>
+                    <span data-toggle="tooltip" data-placement="top" title="This method requires authentication token">&#x1F510;</span>
+                    PUT <span class="text-muted">api/orders/2</span>
+                </h4>
+                <p class="mb-1">
+                    Update the order with ID 2.<br />
+                    <sub class="mx-3">Request body example:</sub>
+                </p>
+                <div class="mx-3 p-2 bg-light rounded">
+                    <code>
+                        {<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"date": "2019-01-17T18:05:30",<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"customerId": 4,<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"productID": 7<br />
+                        }
+                    </code>
+                </div>
+            </div>
+            <div>
+                <h4>
+                    <span data-toggle="tooltip" data-placement="top" title="This method requires authentication token">&#x1F510;</span>
+                    DELETE <span class="text-muted">api/orders/2</span>
+                </h4>
+                <p>
+                    Remove the order with ID 2.<br />
+                </p>
+            </div>
         </div>
+
+
+
+
         <div class="col-lg">
             <h1>+ products</h1>
             <div>
                 <h4>GET <a href="/api/products">api/products</a></h4>
-                <p>Zwraca wszystkie elementy.</p>
+                <p>
+                    Returns a list of all products.<br />
+                    <a href="/api/products/?sortby=name">/?sortby=name</a><br />
+                    <a href="/api/products/?sortby=desctription">/?sortby=desctription</a><br />
+                    <a href="/api/products/?sortby=price">/?sortby=price</a><br />
+                    <a href="/api/products/?sortby=quantity">/?sortby=quantity</a><br />
+                    <a href="/api/products/?orderby=desc">/?orderby=desc</a><br />
+                    <a href="/api/products/?details=true">/?details=true</a>
+                </p>
             </div>
-
             <div>
                 <h4>GET <a href="/api/products/2">api/products/2</a></h4>
-                <p>Zwraca element o ID równym 2.</p>
+                <p>
+                    Returns the product with ID 2.<br />
+                    <a href="/api/products/2/?details=true">/?details=true</a>
+                </p>
+            </div>
+            <div class="mb-3">
+                <h4>
+                    <span data-toggle="tooltip" data-placement="top" title="This method requires authentication token">&#x1F510;</span>
+                    POST <span class="text-muted">api/products</span>
+                </h4>
+                <p class="mb-1">
+                    Adds a new product.<br />
+                    <sub class="mx-3">Request body example:</sub>
+                </p>
+                <div class="mx-3 p-2 bg-light rounded">
+                    <code>
+                        {<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"name": "Apple",<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"desctription": "It's just a fruit"<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"price": 1.5,<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"quantity": 20<br />
+                        }
+                    </code>
+                </div>
+            </div>
+            <div class="mb-3">
+                <h4>
+                    <span data-toggle="tooltip" data-placement="top" title="This method requires authentication token">&#x1F510;</span>
+                    PUT <span class="text-muted">api/products/2</span>
+                </h4>
+                <p class="mb-1">
+                    Update the product with ID 2.<br />
+                    <sub class="mx-3">Request body example:</sub>
+                </p>
+                <div class="mx-3 p-2 bg-light rounded">
+                    <code>
+                        {<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"name": "Ball",<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"desctription": "Diameter: 69cm"<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"price": 59.95,<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;"quantity": 8<br />
+                        }
+                    </code>
+                </div>
+            </div>
+            <div>
+                <h4>
+                    <span data-toggle="tooltip" data-placement="top" title="This method requires authentication token">&#x1F510;</span>
+                    DELETE <span class="text-muted">api/products/2</span>
+                </h4>
+                <p>
+                    Remove the order with ID 2.<br />
+                </p>
             </div>
         </div>
     </div>
-
-    <br />
-    <br />
-    <h4 class="text-muted">For testing</h4>
-    <a href="/database/addorder">Add random order</a>
-
-    @*
-        <br />
-        <p>
-        <mark>Dla <strong>POST</strong>, <strong>PUT</strong> i <strong>DELETE</strong> wymagany jest token autoryzacyjny.<br />
-         W nagłówku żądania należy zawrzeć dodatkowo "Klucz:Wartość".<br />
-         "<span style="color:red;">Authorization:Basic 1234567890abcDEF</span>"</mark>
-        </p>
-
-
-
-        <div>
-            <h4>POST api/movies</h4>
-            <p>Dodaje element. Przykładowe body:</p>
-            <pre>
-                {
-                "title": "Black Mirror: Bandersnatch",
-                "year": 2018
-                }
-            </pre>
-        </div>
-
-        <div>
-            <h4>PUT api/movies/5</h4>
-            <p>Edytuje element o ID równym 5. Przykładowe body:</p>
-            <pre>
-                {
-                "title": "Genesis 2.0",
-                "year": 2018
-                }
-            </pre>
-        </div>
-
-        <div>
-            <h4>DELETE api/movies/5</h4>
-            <p>Usuwa element o ID równym 5.</p>
-        </div>*@
-
 </div>
+
+<div class="container mb-4">
+    <div class="alert alert-warning">
+        Methods <strong>POST</strong>, <strong>PUT</strong> and <strong>DELETE</strong> requires authentication.
+        The request header must contain additional "Key:Value":<br />
+        @*W nagłówku żądania należy zawrzeć dodatkowo "Key:Value":*@
+        <code>"Authorization:Basic 1234567890abcDEF"</code>
+    </div>
+</div>
+
+<div class="container mb-4">
+    <h5>For testing</h5>
+
+    <a href="/database/addorder">Add random order</a><br />
+    <a href="https://www.getpostman.com/">Get Postman</a>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+}

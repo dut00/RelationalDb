@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RelationalDb.Data;
+using RelationalDb.DTOs;
 using RelationalDb.Models;
 using RelationalDb.Services;
 
@@ -32,9 +33,9 @@ namespace RelationalDb
             services.AddDbContext<RelationalDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("RelationalDb")));
 
-            services.AddTransient<ITData<Customer>, SqlCustomerData>();
-            services.AddTransient<ITData<Product>, SqlProductData>();
-            services.AddTransient<ITData<Order>, SqlOrderData>();
+            services.AddScoped<IData<Customer,CustomerDTO>, SqlCustomerData>();
+            services.AddScoped<IData<Product,ProductDTO>, SqlProductData>();
+            services.AddScoped<IData<Order,OrderDTO>, SqlOrderData>();
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
